@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS sprint1;
+create database if not exists sprint1;
 
-USE sprint1;
+use sprint1;
 
 create table usuario(
 	id_usuario int primary key auto_increment,
@@ -142,23 +142,24 @@ values
 
 -- QUERY
 
--- Endereço = são paulo
+-- Mostra o endereço de todas as unidades no estado de São Paulo
 select * from endereco where cidade = 'SP';
 
--- Select data evento, quanto tempo, detecção do sensor, somento do horário das 13 horas do dia 11/10/2026 ordernado por data do evento
-SELECT 
+/* Mostra a atividade dos sensores durante uma hora*/
+select 
 	data_evento,
     quanto_tempo,
-    CASE
-		WHEN detectado = 1 THEN 'Tem alguém'
-		WHEN detectado = 0 THEN 'Não tem ninguém'
-	END AS 'detecção'
-FROM sensor_evento
-WHERE 
+    case
+		when detectado = 1 then 'Tem alguém'
+		when detectado = 0 then 'Não tem ninguém'
+	end as 'detecção'
+from sensor_evento
+where 
 	data_evento between "2026-10-11 13:00:00" and "2026-10-11 13:59:59" 
-ORDER BY data_evento;
+order by data_evento;
 
--- Select data evento, quanto tempo, somento do dia 10-11 e que foi detectado como movimento, ordenado por quanto tempo
+/* Mostrar quanto tempo cada sensor detectou presença durante o dia inteiro,
+para saber as areas que tiveram mais movimento*/
 select 
 	data_evento, 
     quanto_tempo 
@@ -169,8 +170,8 @@ and
 	detectado = 1 
 order by quanto_tempo; 
 
-
--- Selecionar data evento e quanto tempo, somente do dia 10-11 e que não foi detectado movimento, ordenado por quanto tempo
+/* Mostrar quanto tempo cada sensor ficou sem detectar presença durante o dia inteiro,
+para saber as areas que tiveram menos movimento*/
 select 
 	data_evento, 
     quanto_tempo 
@@ -181,8 +182,7 @@ and
 	detectado = 0
 order by quanto_tempo;
 
-
--- Selecionar data evento e quanto tempo, do dia 11/10/2026 do horário de pico padrão e que foi dectado movimento, ordernar por quanto tempo permaneceu no movimento por ordem decrescente
+/* Mostrar quanto tempo cada sensor detectou presença durante um periodo de tempo (como a hora do almoço)*/
 select 
 	data_evento, 
     quanto_tempo
@@ -195,16 +195,16 @@ and
 	detectado = 1
 order by quanto_tempo desc;
 
--- Selecionar nome, email e id da empresa, de todos os usuários
+-- Mostra nome, email e empresa de todos os usuários
 select 
 	nome, 
 	email, 
 	empresa_id 
-FROM usuario;
+from usuario;
 
--- Selecionar cnpj, nome fantasia de todos, endereço id de todas as empresas
+-- Mostra cnpj, nome fantasia e endereço de todos os restaurantes cadastrados
 select 
 	cnpj, 
     nome_fantasia, 
     enderecoId 
-FROM empresa;
+from empresa;
